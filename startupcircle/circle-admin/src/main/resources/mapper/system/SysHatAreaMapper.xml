@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.circle.web.system.mapper.SysHatAreaMapper">
+    
+    <resultMap type="SysHatArea" id="SysHatAreaResult">
+        <result property="rid"    column="rid"    />
+        <result property="areaID"    column="areaID"    />
+        <result property="area"    column="area"    />
+        <result property="father"    column="father"    />
+    </resultMap>
+
+    <sql id="selectSysHatAreaVo">
+        select rid, areaID, area, father from sys_hat_area
+    </sql>
+
+    <select id="selectSysHatAreaList" parameterType="SysHatArea" resultMap="SysHatAreaResult">
+        <include refid="selectSysHatAreaVo"/>
+        <where>  
+            <if test="areaID != null  and areaID != ''"> and areaID = #{areaID}</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="father != null  and father != ''"> and father = #{father}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysHatAreaByRid" parameterType="String" resultMap="SysHatAreaResult">
+        <include refid="selectSysHatAreaVo"/>
+        where rid = #{rid}
+    </select>
+        
+    <insert id="insertSysHatArea" parameterType="SysHatArea">
+        insert into sys_hat_area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rid != null">rid,</if>
+            <if test="areaID != null">areaID,</if>
+            <if test="area != null">area,</if>
+            <if test="father != null">father,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rid != null">#{rid},</if>
+            <if test="areaID != null">#{areaID},</if>
+            <if test="area != null">#{area},</if>
+            <if test="father != null">#{father},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysHatArea" parameterType="SysHatArea">
+        update sys_hat_area
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="areaID != null">areaID = #{areaID},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="father != null">father = #{father},</if>
+        </trim>
+        where rid = #{rid}
+    </update>
+
+    <delete id="deleteSysHatAreaByRid" parameterType="String">
+        delete from sys_hat_area where rid = #{rid}
+    </delete>
+
+    <delete id="deleteSysHatAreaByRids" parameterType="String">
+        delete from sys_hat_area where rid in 
+        <foreach item="rid" collection="array" open="(" separator="," close=")">
+            #{rid}
+        </foreach>
+    </delete>
+</mapper>

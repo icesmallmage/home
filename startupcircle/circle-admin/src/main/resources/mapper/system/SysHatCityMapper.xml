@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.circle.web.system.mapper.SysHatCityMapper">
+    
+    <resultMap type="SysHatCity" id="SysHatCityResult">
+        <result property="cid"    column="cid"    />
+        <result property="cityID"    column="cityID"    />
+        <result property="city"    column="city"    />
+        <result property="father"    column="father"    />
+    </resultMap>
+
+    <sql id="selectSysHatCityVo">
+        select cid, cityID, city, father from sys_hat_city
+    </sql>
+
+    <select id="selectSysHatCityList" parameterType="SysHatCity" resultMap="SysHatCityResult">
+        <include refid="selectSysHatCityVo"/>
+        <where>  
+            <if test="cityID != null  and cityID != ''"> and cityID = #{cityID}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="father != null  and father != ''"> and father = #{father}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysHatCityByCid" parameterType="String" resultMap="SysHatCityResult">
+        <include refid="selectSysHatCityVo"/>
+        where cid = #{cid}
+    </select>
+        
+    <insert id="insertSysHatCity" parameterType="SysHatCity">
+        insert into sys_hat_city
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cid != null">cid,</if>
+            <if test="cityID != null">cityID,</if>
+            <if test="city != null">city,</if>
+            <if test="father != null">father,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cid != null">#{cid},</if>
+            <if test="cityID != null">#{cityID},</if>
+            <if test="city != null">#{city},</if>
+            <if test="father != null">#{father},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysHatCity" parameterType="SysHatCity">
+        update sys_hat_city
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cityID != null">cityID = #{cityID},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="father != null">father = #{father},</if>
+        </trim>
+        where cid = #{cid}
+    </update>
+
+    <delete id="deleteSysHatCityByCid" parameterType="String">
+        delete from sys_hat_city where cid = #{cid}
+    </delete>
+
+    <delete id="deleteSysHatCityByCids" parameterType="String">
+        delete from sys_hat_city where cid in 
+        <foreach item="cid" collection="array" open="(" separator="," close=")">
+            #{cid}
+        </foreach>
+    </delete>
+</mapper>

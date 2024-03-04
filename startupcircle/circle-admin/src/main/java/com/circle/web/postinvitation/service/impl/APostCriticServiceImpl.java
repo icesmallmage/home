@@ -1,0 +1,102 @@
+package com.circle.web.postinvitation.service.impl;
+
+import java.util.List;
+
+import com.circle.common.utils.DateUtils;
+import com.circle.web.postinvitation.domain.po.APostCritic;
+import com.circle.web.postinvitation.mapper.APostCriticMapper;
+import com.circle.web.postinvitation.service.IAPostCriticService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * 【回复信息】Service业务层处理
+ * 
+ * @author ruoyi
+ * @date 2024-01-30
+ */
+@Service
+public class APostCriticServiceImpl implements IAPostCriticService
+{
+    @Autowired
+    private APostCriticMapper aPostCriticMapper;
+
+    /**
+     * 查询【回复信息】
+     * 
+     * @param id 【回复信息】主键
+     * @return 【回复信息】
+     */
+    @Override
+    public APostCritic selectAPostCriticById(Long id)
+    {
+        return aPostCriticMapper.selectAPostCriticById(id);
+    }
+
+    @Override
+    public List<APostCritic> getInfoByid(Long id) {
+        return aPostCriticMapper.getInfoByid(id);
+    }
+
+    /**
+     * 查询【回复信息】列表
+     * 
+     * @param aPostCritic 【回复信息】
+     * @return 【回复信息】
+     */
+    @Override
+    public List<APostCritic> selectAPostCriticList(APostCritic aPostCritic)
+    {
+        return aPostCriticMapper.selectAPostCriticList(aPostCritic);
+    }
+
+    /**
+     * 新增【回复信息】
+     * 
+     * @param aPostCritic 【回复信息】
+     * @return 结果
+     */
+    @Override
+    public int insertAPostCritic(APostCritic aPostCritic)
+    {
+        aPostCritic.setCreateTime(DateUtils.getNowDate());
+        return aPostCriticMapper.insertAPostCritic(aPostCritic);
+    }
+
+    /**
+     * 修改【回复信息】
+     * 
+     * @param aPostCritic 【回复信息】
+     * @return 结果
+     */
+    @Override
+    public int updateAPostCritic(APostCritic aPostCritic)
+    {
+        aPostCritic.setUpdateTime(DateUtils.getNowDate());
+        return aPostCriticMapper.updateAPostCritic(aPostCritic);
+    }
+
+    /**
+     * 批量删除【回复信息】
+     * 
+     * @param ids 需要删除的【回复信息】主键
+     * @return 结果
+     */
+    @Override
+    public int deleteAPostCriticByIds(Long[] ids)
+    {
+        return aPostCriticMapper.deleteAPostCriticByIds(ids);
+    }
+
+    /**
+     * 删除【回复信息】信息
+     * 
+     * @param id 【回复信息】主键
+     * @return 结果
+     */
+    @Override
+    public int deleteAPostCriticById(Long id)
+    {
+        return aPostCriticMapper.deleteAPostCriticById(id);
+    }
+}

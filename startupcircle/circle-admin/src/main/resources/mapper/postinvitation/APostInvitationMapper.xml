@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.circle.web.postinvitation.mapper.APostInvitationMapper">
+    
+    <resultMap type="APostInvitation" id="APostInvitationResult">
+        <result property="id"    column="id"    />
+        <result property="postUserId"    column="post_user_id"    />
+        <result property="postNickName"    column="post_nick_name"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="industry" column="industry" />
+        <result property="profession" column="profession" />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="viewCount"    column="view_count"    />
+        <result property="upvoteCount"    column="upvote_count"    />
+        <result property="criticCount"    column="critic_count"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectAPostInvitationVo">
+        select id, post_user_id, post_nick_name, title, content, industry, profession, province, city, view_count, upvote_count, critic_count, create_by, create_time, update_by, update_time, del_flag from a_post_invitation
+    </sql>
+
+    <select id="selectAPostInvitationList" parameterType="APostInvitation" resultMap="APostInvitationResult">
+        <include refid="selectAPostInvitationVo"/>
+        <where>  
+            <if test="industry != null  and industry != ''"> and industry = #{industry}</if>
+            <if test="profession != null  and profession != ''"> and profession like concat('%', #{profession}, '%')</if>
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+
+        </where>
+    </select>
+    
+    <select id="selectAPostInvitationById" parameterType="String" resultMap="APostInvitationResult">
+        <include refid="selectAPostInvitationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAPostInvitation" parameterType="APostInvitation">
+        insert into a_post_invitation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="postUserId != null">post_user_id,</if>
+            <if test="postNickName != null">post_nick_name,</if>
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="industry != null">industry,</if>
+            <if test="profession != null">profession,</if>
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="viewCount != null">view_count,</if>
+            <if test="upvoteCount != null">upvote_count,</if>
+            <if test="criticCount != null">critic_count,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="postUserId != null">#{postUserId},</if>
+            <if test="postNickName != null">#{postNickName},</if>
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="industry != null">#{industry},</if>
+            <if test="profession != null">#{profession},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="viewCount != null">#{viewCount},</if>
+            <if test="upvoteCount != null">#{upvoteCount},</if>
+            <if test="criticCount != null">#{criticCount},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAPostInvitation" parameterType="APostInvitation">
+        update a_post_invitation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="postUserId != null">post_user_id = #{postUserId},</if>
+            <if test="postNickName != null">post_nick_name = #{postNickName},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="industry != null">industry = #{industry}</if>
+            <if test="profession != null">profession = #{profession}</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="viewCount != null">view_count = #{viewCount},</if>
+            <if test="upvoteCount != null">upvote_count = #{upvoteCount},</if>
+            <if test="criticCount != null">critic_count = #{criticCount},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAPostInvitationById" parameterType="String">
+        delete from a_post_invitation where id = #{id}
+    </delete>
+
+    <delete id="deleteAPostInvitationByIds" parameterType="String">
+        delete from a_post_invitation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
