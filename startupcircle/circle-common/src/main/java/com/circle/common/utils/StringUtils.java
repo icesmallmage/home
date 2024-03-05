@@ -636,4 +636,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
         }
         return sb.toString();
     }
+
+    public static Boolean isListNull(List list){
+        return StringUtils.isNull(list) && list.isEmpty();
+    }
+
+    public static Boolean isListNotNull(List list){
+        return !isListNull(list);
+    }
 }

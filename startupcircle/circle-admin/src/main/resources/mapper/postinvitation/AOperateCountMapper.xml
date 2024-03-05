@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.circle.web.postinvitation.mapper.AOperateCountMapper">
+    
+    <resultMap type="AOperateCount" id="AOperateCountResult">
+        <result property="id"    column="id"    />
+        <result property="tId"    column="t_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="operateType"    column="operate_type"    />
+        <result property="isOperate"    column="is_operate"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectAOperateCountVo">
+        select id, t_id, user_id, operate_type, is_operate, create_by, create_time, update_by, update_time, del_flag from a_operate_count
+    </sql>
+
+    <select id="selectAOperateCountList" parameterType="AOperateCount" resultMap="AOperateCountResult">
+        <include refid="selectAOperateCountVo"/>
+        <where>  
+            <if test="tId != null  and tId != ''"> and t_id = #{tId}</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="operateType != null  and operateType != ''"> and operate_type = #{operateType}</if>
+            <if test="isOperate != null  and isOperate != ''"> and is_operate = #{isOperate}</if>
+        </where>
+    </select>
+    
+    <select id="selectAOperateCountById" parameterType="String" resultMap="AOperateCountResult">
+        <include refid="selectAOperateCountVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAOperateCount" parameterType="AOperateCount">
+        insert into a_operate_count
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="tId != null and tId != ''">t_id,</if>
+            <if test="userId != null and userId != ''">user_id,</if>
+            <if test="operateType != null">operate_type,</if>
+            <if test="isOperate != null">is_operate,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="tId != null and tId != ''">#{tId},</if>
+            <if test="userId != null and userId != ''">#{userId},</if>
+            <if test="operateType != null">#{operateType},</if>
+            <if test="isOperate != null">#{isOperate},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAOperateCount" parameterType="AOperateCount">
+        update a_operate_count
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tId != null and tId != ''">t_id = #{tId},</if>
+            <if test="userId != null and userId != ''">user_id = #{userId},</if>
+            <if test="operateType != null">operate_type = #{operateType},</if>
+            <if test="isOperate != null">is_operate = #{isOperate},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAOperateCountById" parameterType="String">
+        delete from a_operate_count where id = #{id}
+    </delete>
+
+    <delete id="deleteAOperateCountByIds" parameterType="String">
+        delete from a_operate_count where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

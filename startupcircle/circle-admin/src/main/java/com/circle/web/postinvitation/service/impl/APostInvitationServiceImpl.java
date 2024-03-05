@@ -10,11 +10,14 @@ import com.circle.common.utils.SecurityUtils;
 import com.circle.web.postinvitation.domain.po.APostInvitation;
 import com.circle.web.postinvitation.domain.to.APostInvitationAddDto;
 import com.circle.web.postinvitation.domain.to.APostInvitationDto;
+import com.circle.web.postinvitation.domain.to.APostInvitationUpdateDto;
 import com.circle.web.postinvitation.domain.vo.APostInvitationVo;
 import com.circle.web.postinvitation.mapper.APostInvitationMapper;
 import com.circle.web.postinvitation.service.IAPostInvitationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * 【帖子信息表】Service业务层处理
@@ -25,7 +28,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class APostInvitationServiceImpl implements IAPostInvitationService
 {
-    @Autowired
+    @Resource
     private APostInvitationMapper aPostInvitationMapper;
 
     /**
@@ -57,9 +60,17 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
         APostInvitation po = new APostInvitation();
         BeanUtil.copyProperties(dto, po);
         po.setId(String.valueOf(IdUtil.getSnowflake().nextId()));
+        po.setUpvoteCount("0");
+        po.setViewCount("0");
+        po.setCriticCount("0");
         po.setCreateTime(DateUtils.getNowDate());
         po.setCreateBy(loginUser.getUsername());
         return aPostInvitationMapper.insertAPostInvitation(po);
+    }
+
+    @Override
+    public int updateAPostInvitation(APostInvitationUpdateDto dto) {
+        return aPostInvitationMapper.updateAPostInvitation(dto);
     }
 
     /**

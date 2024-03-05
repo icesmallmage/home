@@ -40,7 +40,6 @@ public class APostInvitationController extends BaseController
     /**
      * 查询【帖子信息】列表
      */
-    @Anonymous
     @ApiOperation("查询帖子信息")
     @GetMapping("/list")
     public TableDataInfo list(APostInvitationDto dto)
@@ -53,7 +52,6 @@ public class APostInvitationController extends BaseController
     /**
      * 新增【帖子信息表】
      */
-    @Anonymous
     @ApiOperation("新增【帖子信息表】")
     @Log(title = "新增【帖子信息表】", businessType = BusinessType.INSERT)
     @PostMapping
@@ -66,7 +64,6 @@ public class APostInvitationController extends BaseController
     /**
      * 删除【帖子信息表】
      */
-    @Anonymous
     @ApiOperation("删除【帖子信息表】")
     @Log(title = "删除【帖子信息表】", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")

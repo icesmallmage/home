@@ -2,6 +2,7 @@ package com.circle.web.postinvitation.service;
 
 import com.circle.web.postinvitation.domain.to.APostInvitationAddDto;
 import com.circle.web.postinvitation.domain.to.APostInvitationDto;
+import com.circle.web.postinvitation.domain.to.APostInvitationUpdateDto;
 import com.circle.web.postinvitation.domain.vo.APostInvitationVo;
 
 import java.util.List;
@@ -31,6 +32,12 @@ public interface IAPostInvitationService
      * @return 结果
      */
     public int insertAPostInvitation(APostInvitationAddDto dto);
+
+    /**
+     * 修改帖子信息
+     */
+    public int updateAPostInvitation(APostInvitationUpdateDto dto);
+
 
     /**
      * 批量删除【帖子信息表】

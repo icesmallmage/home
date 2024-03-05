@@ -54,8 +54,8 @@ public class APostInvitation extends BaseEntity
     private String city;
 
     /** 浏览量 */
-    @ApiModelProperty(value = "浏览量")
-    @Excel(name = "浏览量")
+    @ApiModelProperty(value = "收藏量")
+    @Excel(name = "收藏量")
     private String viewCount;
 
     /** 点赞量 */

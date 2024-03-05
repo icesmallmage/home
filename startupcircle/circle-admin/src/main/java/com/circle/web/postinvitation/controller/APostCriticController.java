@@ -2,7 +2,6 @@ package com.circle.web.postinvitation.controller;
 
 import java.util.List;
 
-import com.circle.common.annotation.Anonymous;
 import com.circle.common.annotation.Log;
 import com.circle.common.core.controller.BaseController;
 import com.circle.common.core.domain.AjaxResult;
@@ -32,7 +31,6 @@ public class APostCriticController extends BaseController
     /**
      * 查询【回复信息】列表
      */
-    @Anonymous
     @ApiOperation("查询【回复信息】列表")
     @GetMapping("/list")
     public TableDataInfo list(APostCritic aPostCritic)
@@ -45,7 +43,6 @@ public class APostCriticController extends BaseController
     /**
      * 获取【回复信息】详细信息
      */
-    @Anonymous
     @ApiOperation("获取【回复信息】详细信息")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
@@ -57,7 +54,6 @@ public class APostCriticController extends BaseController
     /**
      * 获取【帖子回复信息】详细信息
      */
-    @Anonymous
     @ApiOperation("获取【帖子回复信息】详细信息")
     @GetMapping(value = "/getInfoById")
     public AjaxResult<List<APostCritic>> getInfoById(@RequestParam("id") Long id)

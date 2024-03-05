@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateAPostInvitation" parameterType="APostInvitation">
+    <update id="updateAPostInvitation" parameterType="APostInvitationUpdateDto">
         update a_post_invitation
         <trim prefix="SET" suffixOverrides=",">
             <if test="postUserId != null">post_user_id = #{postUserId},</if>

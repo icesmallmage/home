@@ -1,6 +1,7 @@
 package com.circle.web.postinvitation.mapper;
 
 import com.circle.web.postinvitation.domain.po.APostInvitation;
+import com.circle.web.postinvitation.domain.to.APostInvitationUpdateDto;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public interface APostInvitationMapper
      * @param aPostInvitation 【请填写功能名称】
      * @return 结果
      */
-    public int updateAPostInvitation(APostInvitation aPostInvitation);
+    public int updateAPostInvitation(APostInvitationUpdateDto aPostInvitation);
 
     /**
      * 删除【请填写功能名称】
