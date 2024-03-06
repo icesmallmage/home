@@ -2,7 +2,11 @@ package com.circle.web.postinvitation.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.util.IdUtil;
+import com.circle.common.constant.Constants;
+import com.circle.common.core.domain.model.LoginUser;
 import com.circle.common.utils.DateUtils;
+import com.circle.common.utils.SecurityUtils;
 import com.circle.common.utils.StringUtils;
 import com.circle.web.postinvitation.domain.po.APostCritic;
 import com.circle.web.postinvitation.domain.to.APostInvitationUpdateDto;
@@ -69,6 +73,10 @@ public class APostCriticServiceImpl implements IAPostCriticService
     @Transactional(rollbackFor = Exception.class)
     public int insertAPostCritic(APostCritic aPostCritic)
     {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        aPostCritic.setId(IdUtil.getSnowflake().nextId());
+        aPostCritic.setDelFlag(Constants.DEL_FLAG_FALSE);
+        aPostCritic.setCreateBy(loginUser.getUsername());
         aPostCritic.setCreateTime(DateUtils.getNowDate());
         aPostCriticMapper.insertAPostCritic(aPostCritic);
         // 查询关联帖子id

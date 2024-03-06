@@ -4,6 +4,7 @@ import com.circle.web.postinvitation.domain.to.APostInvitationAddDto;
 import com.circle.web.postinvitation.domain.to.APostInvitationDto;
 import com.circle.web.postinvitation.domain.to.APostInvitationUpdateDto;
 import com.circle.web.postinvitation.domain.vo.APostInvitationVo;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ import java.util.List;
  */
 public interface IAPostInvitationService 
 {
+
+    PageInfo<APostInvitationVo> pageList(APostInvitationDto dto, int pageNum, int pageSize);
+
 
     /**
      * 查询【帖子信息表】列表

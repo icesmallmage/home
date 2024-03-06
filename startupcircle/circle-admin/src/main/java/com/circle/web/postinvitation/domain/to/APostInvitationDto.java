@@ -24,4 +24,6 @@ public class APostInvitationDto {
     @ApiModelProperty(value = "发评论人城市")
     private String city;
 
+
+
 }

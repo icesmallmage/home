@@ -72,7 +72,8 @@ public class APostInvitation extends BaseEntity
     @ApiModelProperty(value = "删除标志")
     private String delFlag;
 
-    public void setId(String id) 
+
+    public void setId(String id)
     {
         this.id = id;
     }

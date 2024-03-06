@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.circle.web.postinvitation.mapper.AOperateCountMapper">
     
-    <resultMap type="AOperateCount" id="AOperateCountResult">
+    <resultMap type="AOperateCountDto" id="AOperateCountResult">
         <result property="id"    column="id"    />
         <result property="tId"    column="t_id"    />
         <result property="userId"    column="user_id"    />
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
         
-    <insert id="insertAOperateCount" parameterType="AOperateCount">
+    <insert id="insertAOperateCount" parameterType="AOperateCountDto">
         insert into a_operate_count
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateAOperateCount" parameterType="AOperateCount">
+    <update id="updateAOperateCount" parameterType="AOperateCountDto">
         update a_operate_count
         <trim prefix="SET" suffixOverrides=",">
             <if test="tId != null and tId != ''">t_id = #{tId},</if>

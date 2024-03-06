@@ -89,6 +89,7 @@ public class AOperateCount extends BaseEntity
     {
         return isOperate;
     }
+
     public void setDelFlag(String delFlag) 
     {
         this.delFlag = delFlag;

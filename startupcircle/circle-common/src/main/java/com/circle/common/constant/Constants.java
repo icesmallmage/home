@@ -159,6 +159,10 @@ public class Constants
      */
     public static final String[] JOB_WHITELIST_STR = { "com.circle" };
 
+    public static final String DEL_FLAG_TRUE = "1";
+
+    public static final String DEL_FLAG_FALSE = "0";
+
     /**
      * 定时任务违规的字符
      */

@@ -2,26 +2,19 @@ package com.circle.web.postinvitation.controller;
 
 import java.util.List;
 
-import com.circle.common.annotation.Anonymous;
 import com.circle.common.annotation.Log;
 import com.circle.common.core.controller.BaseController;
 import com.circle.common.core.domain.AjaxResult;
-import com.circle.common.core.page.TableDataInfo;
 import com.circle.common.enums.BusinessType;
 import com.circle.web.postinvitation.domain.to.APostInvitationAddDto;
 import com.circle.web.postinvitation.domain.to.APostInvitationDto;
 import com.circle.web.postinvitation.domain.vo.APostInvitationVo;
 import com.circle.web.postinvitation.service.IAPostInvitationService;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 【帖子信息表】Controller
@@ -37,16 +30,21 @@ public class APostInvitationController extends BaseController
     @Autowired
     private IAPostInvitationService aPostInvitationService;
 
-    /**
-     * 查询【帖子信息】列表
-     */
-    @ApiOperation("查询帖子信息")
+    @ApiOperation("查询帖子信息列表")
+    @GetMapping("/pageList")
+    public AjaxResult<PageInfo<APostInvitationVo>> pageList(APostInvitationDto dto,
+                                                            @RequestParam("pageNum") int pageNum,
+                                                            @RequestParam("pageSize") int pageSize) {
+        PageInfo<APostInvitationVo> list = aPostInvitationService.pageList(dto, pageNum, pageSize);
+        return success(list);
+    }
+
+    @ApiOperation("查询帖子信息列表")
     @GetMapping("/list")
-    public TableDataInfo list(APostInvitationDto dto)
+    public AjaxResult<List<APostInvitationVo>> list(APostInvitationDto dto)
     {
-        startPage();
         List<APostInvitationVo> list = aPostInvitationService.selectAPostInvitationList(dto);
-        return getDataTable(list);
+        return success(list);
     }
 
     /**

@@ -5,7 +5,6 @@ import java.util.List;
 import com.circle.common.annotation.Log;
 import com.circle.common.core.controller.BaseController;
 import com.circle.common.core.domain.AjaxResult;
-import com.circle.common.core.page.TableDataInfo;
 import com.circle.common.enums.BusinessType;
 import com.circle.web.postinvitation.domain.po.APostCritic;
 import com.circle.web.postinvitation.service.IAPostCriticService;
@@ -28,33 +27,11 @@ public class APostCriticController extends BaseController
     @Autowired
     private IAPostCriticService aPostCriticService;
 
-    /**
-     * 查询【回复信息】列表
-     */
-    @ApiOperation("查询【回复信息】列表")
-    @GetMapping("/list")
-    public TableDataInfo list(APostCritic aPostCritic)
-    {
-        startPage();
-        List<APostCritic> list = aPostCriticService.selectAPostCriticList(aPostCritic);
-        return getDataTable(list);
-    }
 
     /**
-     * 获取【回复信息】详细信息
+     * 通过帖子id查询回复列表
      */
-    @ApiOperation("获取【回复信息】详细信息")
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
-        aPostCriticService.selectAPostCriticById(id);
-        return success();
-    }
-
-    /**
-     * 获取【帖子回复信息】详细信息
-     */
-    @ApiOperation("获取【帖子回复信息】详细信息")
+    @ApiOperation("通过帖子id查询回复列表")
     @GetMapping(value = "/getInfoById")
     public AjaxResult<List<APostCritic>> getInfoById(@RequestParam("id") Long id)
     {
