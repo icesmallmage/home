@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.circle.web.postinvitation.mapper.AOperateCountMapper">
     
-    <resultMap type="AOperateCountDto" id="AOperateCountResult">
+    <resultMap type="AOperateCount" id="AOperateCountResult">
         <result property="id"    column="id"    />
         <result property="tId"    column="t_id"    />
         <result property="userId"    column="user_id"    />

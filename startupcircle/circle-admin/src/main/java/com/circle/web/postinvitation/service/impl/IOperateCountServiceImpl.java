@@ -46,7 +46,7 @@ public class IOperateCountServiceImpl implements IOperateCountService {
         List<AOperateCount> list = aOperateCountMapper.selectAOperateCountList(aOperateCount);
         if(StringUtils.isListNull(list)){
             // 没有记录做新增操作
-            aOperateCount.settId(String.valueOf(IdUtil.getSnowflake().nextId()));
+            aOperateCount.setId(String.valueOf(IdUtil.getSnowflake().nextId()));
             aOperateCount.setIsOperate(isOperate);
             aOperateCount.setDelFlag(Constants.DEL_FLAG_FALSE);
             aOperateCountMapper.insertAOperateCount(aOperateCount);
