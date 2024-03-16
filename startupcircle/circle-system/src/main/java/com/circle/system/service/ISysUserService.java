@@ -1,6 +1,8 @@
 package com.circle.system.service;
 
 import java.util.List;
+
+import com.circle.common.core.domain.dto.SysUserUpdateDto;
 import com.circle.common.core.domain.entity.SysUser;
 
 /**
@@ -203,4 +205,6 @@ public interface ISysUserService
      * @return 结果
      */
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
+
+    public void appUserUpdate(SysUserUpdateDto dto);
 }

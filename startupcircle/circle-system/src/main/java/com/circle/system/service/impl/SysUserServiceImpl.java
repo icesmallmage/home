@@ -3,9 +3,12 @@ package com.circle.system.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.Resource;
 import javax.validation.Validator;
 
 import com.circle.common.constant.UserConstants;
+import com.circle.common.core.domain.dto.SysUserUpdateDto;
+import com.circle.common.utils.bean.BeanUtils;
 import com.circle.system.mapper.SysUserRoleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,19 +44,19 @@ public class SysUserServiceImpl implements ISysUserService
 {
     private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
-    @Autowired
+    @Resource
     private SysUserMapper userMapper;
 
-    @Autowired
+    @Resource
     private SysRoleMapper roleMapper;
 
-    @Autowired
+    @Resource
     private SysPostMapper postMapper;
 
-    @Autowired
+    @Resource
     private SysUserRoleMapper userRoleMapper;
 
-    @Autowired
+    @Resource
     private SysUserPostMapper userPostMapper;
 
     @Autowired
@@ -541,5 +544,21 @@ public class SysUserServiceImpl implements ISysUserService
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }
         return successMsg.toString();
+    }
+
+    @Override
+    public void appUserUpdate(SysUserUpdateDto dto) {
+
+        if(StringUtils.isNotEmpty(dto.getNickName())){
+            String nickName = dto.getNickName();
+            if (nickName.length() < UserConstants.USERNAME_MIN_LENGTH
+                    || nickName.length() > UserConstants.USERNAME_MAX_LENGTH) {
+                throw new ServiceException("昵称长度必须在2到20个字符之间");
+            }
+        }
+        SysUser sysUser = new SysUser();
+        BeanUtils.copyBeanProp(dto, sysUser);
+        // 调用修改
+        userMapper.updateUser(sysUser);
     }
 }
