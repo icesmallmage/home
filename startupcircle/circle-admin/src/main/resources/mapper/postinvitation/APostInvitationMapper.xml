@@ -30,11 +30,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectAPostInvitationList" parameterType="APostInvitation" resultMap="APostInvitationResult">
         <include refid="selectAPostInvitationVo"/>
-        <where>  
+        <where>
+            <if test="id != null and id != ''"> and  id = #{id}</if>
             <if test="industry != null  and industry != ''"> and industry = #{industry}</if>
             <if test="profession != null  and profession != ''"> and profession like concat('%', #{profession}, '%')</if>
             <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
-
+            <if test="postUserId != null and postUserId != ''"> and post_user_id = #{postUserId}</if>
         </where>
     </select>
     

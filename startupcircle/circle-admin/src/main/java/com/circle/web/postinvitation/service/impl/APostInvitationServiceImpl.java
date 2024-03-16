@@ -9,6 +9,7 @@ import com.circle.common.constant.Constants;
 import com.circle.common.core.domain.model.LoginUser;
 import com.circle.common.utils.DateUtils;
 import com.circle.common.utils.SecurityUtils;
+import com.circle.common.utils.StringUtils;
 import com.circle.web.postinvitation.domain.po.AOperateCount;
 import com.circle.web.postinvitation.domain.po.APostInvitation;
 import com.circle.web.postinvitation.domain.to.APostInvitationAddDto;
@@ -44,6 +45,9 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
         LoginUser loginUser = SecurityUtils.getLoginUser();
         APostInvitation po = new APostInvitation();
         BeanUtil.copyProperties(dto, po);
+        if(StringUtils.isNotEmpty(dto.getUserId())){
+            po.setPostUserId(dto.getUserId());
+        }
         PageHelper.startPage(pageNum, pageSize);
         List<APostInvitation> list = aPostInvitationMapper.selectAPostInvitationList(po);
         PageInfo pageInfo = new PageInfo(list);

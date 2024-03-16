@@ -73,4 +73,5 @@ public class APostCriticController extends BaseController
         aPostCriticService.deleteAPostCriticByIds(ids);
         return success();
     }
+
 }

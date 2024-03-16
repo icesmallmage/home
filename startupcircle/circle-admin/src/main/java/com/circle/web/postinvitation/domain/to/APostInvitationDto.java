@@ -6,6 +6,9 @@ import lombok.Data;
 @Data
 public class APostInvitationDto {
 
+    @ApiModelProperty(value = "id")
+    private String id;
+
     /** 标题 */
     @ApiModelProperty(value = "标题")
     private String title;
@@ -23,5 +26,8 @@ public class APostInvitationDto {
 
     @ApiModelProperty(value = "发评论人城市")
     private String city;
+
+    @ApiModelProperty(value = "当前登录人")
+    private String userId;
 
 }
