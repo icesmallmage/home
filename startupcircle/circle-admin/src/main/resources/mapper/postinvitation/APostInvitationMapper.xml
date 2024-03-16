@@ -118,4 +118,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectOperateList" parameterType="String" resultMap="APostInvitationResult">
+        select a.id,
+               a.post_user_id,
+               a.post_nick_name ,
+               a.title,
+               a.content,
+               a.industry,
+               a.profession,
+               a.province,
+               a.city,
+               a.view_count,
+               a.upvote_count,
+               a.critic_count,
+               a.create_by,
+               a.create_time,
+               a.update_by,
+               a.update_time
+        from a_post_invitation a
+        inner join a_operate_count b on a.id = b.t_id
+        where b.user_id = #{userId} and b.is_operate = '1'
+        <if test="operateType != null  and operateType != ''">
+            and b.operate_type = #{operateType}
+        </if>
+    </select>
 </mapper>

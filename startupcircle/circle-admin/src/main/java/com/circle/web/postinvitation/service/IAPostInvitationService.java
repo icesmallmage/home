@@ -58,4 +58,7 @@ public interface IAPostInvitationService
      * @return 结果
      */
     public int deleteAPostInvitationById(String id);
+
+    public PageInfo<APostInvitationVo> operateList(String operateType, int pageNum, int pageSize);
+
 }

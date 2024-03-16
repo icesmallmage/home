@@ -148,4 +148,18 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
     {
         return aPostInvitationMapper.deleteAPostInvitationById(id);
     }
+
+    @Override
+    public PageInfo<APostInvitationVo> operateList(String operateType, int pageNum, int pageSize) {
+        // 获取当前的用户
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        String userId = String.valueOf(loginUser.getUserId());
+        PageHelper.startPage(pageNum, pageSize);
+        List<APostInvitation> list = aPostInvitationMapper.selectOperateList(userId, operateType);
+        PageInfo pageInfo = new PageInfo(list);
+        List<APostInvitationVo> voList = BeanUtil.copyToList(list, APostInvitationVo.class);
+        pageInfo.setList(voList);
+        return pageInfo;
+    }
+
 }

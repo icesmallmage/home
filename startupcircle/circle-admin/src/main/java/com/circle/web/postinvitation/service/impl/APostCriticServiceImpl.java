@@ -13,6 +13,8 @@ import com.circle.web.postinvitation.domain.to.APostInvitationUpdateDto;
 import com.circle.web.postinvitation.mapper.APostCriticMapper;
 import com.circle.web.postinvitation.service.IAPostCriticService;
 import com.circle.web.postinvitation.service.IAPostInvitationService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +49,10 @@ public class APostCriticServiceImpl implements IAPostCriticService
     }
 
     @Override
-    public List<APostCritic> getInfoByid(Long id) {
-        return aPostCriticMapper.getInfoByid(id);
+    public PageInfo<APostCritic> getInfoByid(Long id, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<APostCritic> list = aPostCriticMapper.getInfoByid(id);
+        return new PageInfo(list);
     }
 
     /**

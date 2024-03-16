@@ -1,13 +1,12 @@
 package com.circle.web.postinvitation.controller;
 
-import java.util.List;
-
 import com.circle.common.annotation.Log;
 import com.circle.common.core.controller.BaseController;
 import com.circle.common.core.domain.AjaxResult;
 import com.circle.common.enums.BusinessType;
 import com.circle.web.postinvitation.domain.po.APostCritic;
 import com.circle.web.postinvitation.service.IAPostCriticService;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +30,12 @@ public class APostCriticController extends BaseController
     /**
      * 通过帖子id查询回复列表
      */
-    @ApiOperation("通过帖子id查询回复列表")
+    @ApiOperation("通过帖子id查询回复分页列表")
     @GetMapping(value = "/getInfoById")
-    public AjaxResult<List<APostCritic>> getInfoById(@RequestParam("id") Long id)
-    {
-        return success(aPostCriticService.getInfoByid(id));
+    public AjaxResult<PageInfo<APostCritic>> getInfoById(@RequestParam("id") Long id,
+                                                         @RequestParam("pageNum") int pageNum,
+                                                         @RequestParam("pageSize") int pageSize) {
+        return success(aPostCriticService.getInfoByid(id, pageNum, pageSize));
     }
 
     /**

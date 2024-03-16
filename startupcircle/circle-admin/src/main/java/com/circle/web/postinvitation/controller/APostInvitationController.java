@@ -30,7 +30,7 @@ public class APostInvitationController extends BaseController
     @Autowired
     private IAPostInvitationService aPostInvitationService;
 
-    @ApiOperation("查询帖子信息列表")
+    @ApiOperation("查询帖子信息分页列表")
     @GetMapping("/pageList")
     public AjaxResult<PageInfo<APostInvitationVo>> pageList(APostInvitationDto dto,
                                                             @RequestParam("pageNum") int pageNum,
@@ -69,6 +69,17 @@ public class APostInvitationController extends BaseController
     {
         aPostInvitationService.deleteAPostInvitationByIds(ids);
         return success();
+    }
+
+    /**
+     * 查询当前登录人收藏了哪些帖子
+     */
+    @ApiOperation("查询收藏、点赞帖子信息分页列表")
+    @GetMapping("/operateList")
+    public AjaxResult<PageInfo<APostInvitationVo>> operateList(@RequestParam("operateType") String operateType,
+                                                            @RequestParam("pageNum") int pageNum,
+                                                            @RequestParam("pageSize") int pageSize) {
+        return success(aPostInvitationService.operateList(operateType, pageNum, pageSize));
     }
 
 }

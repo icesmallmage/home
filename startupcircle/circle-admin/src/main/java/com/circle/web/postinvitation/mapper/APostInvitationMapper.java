@@ -2,6 +2,7 @@ package com.circle.web.postinvitation.mapper;
 
 import com.circle.web.postinvitation.domain.po.APostInvitation;
 import com.circle.web.postinvitation.domain.to.APostInvitationUpdateDto;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -60,5 +61,7 @@ public interface APostInvitationMapper
      * @return 结果
      */
     public int deleteAPostInvitationByIds(String[] ids);
+
+    public List<APostInvitation> selectOperateList(@Param("userId") String userId, @Param("operateType") String operateType);
 
 }
