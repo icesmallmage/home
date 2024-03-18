@@ -548,16 +548,28 @@ public class SysUserServiceImpl implements ISysUserService
 
     @Override
     public void appUserUpdate(SysUserUpdateDto dto) {
-
+        SysUser sysUser = new SysUser();
+        sysUser.setUserId(Long.valueOf(dto.getUserId()));
         if(StringUtils.isNotEmpty(dto.getNickName())){
             String nickName = dto.getNickName();
             if (nickName.length() < UserConstants.USERNAME_MIN_LENGTH
                     || nickName.length() > UserConstants.USERNAME_MAX_LENGTH) {
                 throw new ServiceException("昵称长度必须在2到20个字符之间");
             }
+            sysUser.setNickName(nickName);
         }
-        SysUser sysUser = new SysUser();
-        BeanUtils.copyBeanProp(dto, sysUser);
+        if(StringUtils.isNotEmpty(dto.getFirmName())){
+            sysUser.setFirmName(dto.getFirmName());
+        }
+        if(StringUtils.isNotEmpty(dto.getJobName())){
+            sysUser.setJobName(dto.getJobName());
+        }
+        if(StringUtils.isNotEmpty(dto.getProvince())){
+            sysUser.setProvince(dto.getProvince());
+        }
+        if(StringUtils.isNotEmpty(dto.getCity())){
+            sysUser.setCity(dto.getCity());
+        }
         // 调用修改
         userMapper.updateUser(sysUser);
     }

@@ -50,8 +50,9 @@ public class APostCriticServiceImpl implements IAPostCriticService
 
     @Override
     public PageInfo<APostCritic> getInfoByid(Long id, int pageNum, int pageSize) {
+        aPostCriticMapper.callInfoById(id);
         PageHelper.startPage(pageNum, pageSize);
-        List<APostCritic> list = aPostCriticMapper.getInfoByid(id);
+        List<APostCritic> list = aPostCriticMapper.getInfoById();
         return new PageInfo(list);
     }
 

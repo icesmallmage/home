@@ -42,8 +42,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
-    <select id="getInfoByid" statementType="CALLABLE" parameterType="Long" resultMap="APostCriticResult">
-        {call createTemTable( #{id, mode=IN}, '0' )}
+    <update id="callInfoById">
+        call createTemTable( #{id, mode=IN}, '0' )
+    </update>
+
+    <select id="getInfoById" statementType="CALLABLE" parameterType="Long" resultMap="APostCriticResult">
+        -- 从临时表查询结果
+        SELECT id,post_user_id,post_nick_name,post_invitation_id,content,parent_id,parent_nick_name,create_time FROM tmp_cur
     </select>
 
     <insert id="insertAPostCritic" parameterType="APostCritic" useGeneratedKeys="true" keyProperty="id">

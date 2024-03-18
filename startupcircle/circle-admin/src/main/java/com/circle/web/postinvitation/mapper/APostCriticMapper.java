@@ -25,7 +25,8 @@ public interface APostCriticMapper
      * @param id
      * @return
      */
-    public List<APostCritic> getInfoByid(Long id);
+    void callInfoById(Long id);
+    public List<APostCritic> getInfoById();
 
     /**
      * 查询【请填写功能名称】列表

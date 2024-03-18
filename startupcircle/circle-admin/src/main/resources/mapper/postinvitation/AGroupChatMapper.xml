@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.circle.web.postinvitation.mapper.AGroupChatMapper">
+    
+    <resultMap type="AGroupChat" id="AGroupChatResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="tId"    column="t_id"    />
+        <result property="tName"    column="t_name"    />
+        <result property="groOwnId"    column="gro_own_id"    />
+        <result property="groOwnName"    column="gro_own_name"    />
+        <result property="groNotice"    column="gro_notice"    />
+        <result property="peoNum"    column="peo_num"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectAGroupChatVo">
+        select id, name, t_id, t_name, gro_own_id, gro_own_name, gro_notice, peo_num, create_by, create_time, update_by, update_time, del_flag from a_group_chat
+    </sql>
+
+    <select id="selectAGroupChatList" parameterType="AGroupChat" resultMap="AGroupChatResult">
+        <include refid="selectAGroupChatVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="tId != null  and tId != ''"> and t_id = #{tId}</if>
+            <if test="tName != null  and tName != ''"> and t_name like concat('%', #{tName}, '%')</if>
+            <if test="groOwnId != null  and groOwnId != ''"> and gro_own_id = #{groOwnId}</if>
+            <if test="groOwnName != null  and groOwnName != ''"> and gro_own_name like concat('%', #{groOwnName}, '%')</if>
+            <if test="groNotice != null  and groNotice != ''"> and gro_notice = #{groNotice}</if>
+            <if test="peoNum != null "> and peo_num = #{peoNum}</if>
+        </where>
+    </select>
+    
+    <select id="selectAGroupChatById" parameterType="String" resultMap="AGroupChatResult">
+        <include refid="selectAGroupChatVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAGroupChat" parameterType="AGroupChat">
+        insert into a_group_chat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="tId != null">t_id,</if>
+            <if test="tName != null">t_name,</if>
+            <if test="groOwnId != null">gro_own_id,</if>
+            <if test="groOwnName != null">gro_own_name,</if>
+            <if test="groNotice != null">gro_notice,</if>
+            <if test="peoNum != null">peo_num,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="tId != null">#{tId},</if>
+            <if test="tName != null">#{tName},</if>
+            <if test="groOwnId != null">#{groOwnId},</if>
+            <if test="groOwnName != null">#{groOwnName},</if>
+            <if test="groNotice != null">#{groNotice},</if>
+            <if test="peoNum != null">#{peoNum},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAGroupChat" parameterType="AGroupChat">
+        update a_group_chat
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="tId != null">t_id = #{tId},</if>
+            <if test="tName != null">t_name = #{tName},</if>
+            <if test="groOwnId != null">gro_own_id = #{groOwnId},</if>
+            <if test="groOwnName != null">gro_own_name = #{groOwnName},</if>
+            <if test="groNotice != null">gro_notice = #{groNotice},</if>
+            <if test="peoNum != null">peo_num = #{peoNum},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAGroupChatById" parameterType="String">
+        delete from a_group_chat where id = #{id}
+    </delete>
+
+    <delete id="deleteAGroupChatByIds" parameterType="String">
+        delete from a_group_chat where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
