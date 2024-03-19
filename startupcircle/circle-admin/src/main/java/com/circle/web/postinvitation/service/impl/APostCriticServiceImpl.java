@@ -49,7 +49,7 @@ public class APostCriticServiceImpl implements IAPostCriticService
     }
 
     @Override
-    public PageInfo<APostCritic> getInfoByid(Long id, int pageNum, int pageSize) {
+    public PageInfo<APostCritic> getInfoByid(Long id, Integer pageNum, Integer pageSize) {
         aPostCriticMapper.callInfoById(id);
         PageHelper.startPage(pageNum, pageSize);
         List<APostCritic> list = aPostCriticMapper.getInfoById();
@@ -79,7 +79,6 @@ public class APostCriticServiceImpl implements IAPostCriticService
     public int insertAPostCritic(APostCritic aPostCritic)
     {
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        aPostCritic.setId(IdUtil.getSnowflake().nextId());
         aPostCritic.setDelFlag(Constants.DEL_FLAG_FALSE);
         aPostCritic.setCreateBy(loginUser.getUsername());
         aPostCritic.setCreateTime(DateUtils.getNowDate());

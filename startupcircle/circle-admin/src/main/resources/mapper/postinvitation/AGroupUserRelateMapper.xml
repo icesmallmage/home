@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>
             <if test="gId != null  and gId != ''"> and g_id = #{gId}</if>
             <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="delFlag != null and delFlag !- ''"> and del_flag = #{delFlag}</if>
         </where>
     </select>
     

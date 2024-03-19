@@ -20,6 +20,8 @@ public interface AGroupChatMapper
      */
     public AGroupChat selectAGroupChatById(String id);
 
+    public List<AGroupChat> selectAGroupChatByIds(List<String> ids);
+
     /**
      * 查询【群聊】列表
      * 
@@ -27,6 +29,11 @@ public interface AGroupChatMapper
      * @return 【群聊】集合
      */
     public List<AGroupChat> selectAGroupChatList(AGroupChat aGroupChat);
+
+    /**
+     * 查询所有群聊id
+     */
+    public List<String> selectIds();
 
     /**
      * 新增【群聊】

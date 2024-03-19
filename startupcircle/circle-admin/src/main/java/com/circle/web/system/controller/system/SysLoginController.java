@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.circle.common.constant.Constants;
+import com.circle.system.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class SysLoginController
 
     @Autowired
     private SysPermissionService permissionService;
+
+    @Autowired
+    private ISysUserService iSysUserService;
 
     /**
      * 登录方法
@@ -82,6 +86,7 @@ public class SysLoginController
     public AjaxResult getInfo()
     {
         SysUser user = SecurityUtils.getLoginUser().getUser();
+        user = iSysUserService.selectUserById(user.getUserId());
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(user);
         // 权限集合

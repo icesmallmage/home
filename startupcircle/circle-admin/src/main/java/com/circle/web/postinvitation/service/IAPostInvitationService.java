@@ -17,7 +17,7 @@ import java.util.List;
 public interface IAPostInvitationService 
 {
 
-    PageInfo<APostInvitationVo> pageList(APostInvitationDto dto, int pageNum, int pageSize);
+    PageInfo<APostInvitationVo> pageList(APostInvitationDto dto, Integer pageNum, Integer pageSize);
 
 
     /**
@@ -59,6 +59,6 @@ public interface IAPostInvitationService
      */
     public int deleteAPostInvitationById(String id);
 
-    public PageInfo<APostInvitationVo> operateList(String operateType, int pageNum, int pageSize);
+    public PageInfo<APostInvitationVo> operateList(String operateType, Integer pageNum, Integer pageSize);
 
 }

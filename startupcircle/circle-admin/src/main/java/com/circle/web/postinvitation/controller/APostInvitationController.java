@@ -33,8 +33,8 @@ public class APostInvitationController extends BaseController
     @ApiOperation("查询帖子信息分页列表")
     @GetMapping("/pageList")
     public AjaxResult<PageInfo<APostInvitationVo>> pageList(APostInvitationDto dto,
-                                                            @RequestParam("pageNum") int pageNum,
-                                                            @RequestParam("pageSize") int pageSize) {
+                                                            @RequestParam("pageNum") Integer pageNum,
+                                                            @RequestParam("pageSize") Integer pageSize) {
         PageInfo<APostInvitationVo> list = aPostInvitationService.pageList(dto, pageNum, pageSize);
         return success(list);
     }
@@ -77,8 +77,8 @@ public class APostInvitationController extends BaseController
     @ApiOperation("查询收藏、点赞帖子信息分页列表")
     @GetMapping("/operateList")
     public AjaxResult<PageInfo<APostInvitationVo>> operateList(@RequestParam("operateType") String operateType,
-                                                            @RequestParam("pageNum") int pageNum,
-                                                            @RequestParam("pageSize") int pageSize) {
+                                                            @RequestParam("pageNum") Integer pageNum,
+                                                            @RequestParam("pageSize") Integer pageSize) {
         return success(aPostInvitationService.operateList(operateType, pageNum, pageSize));
     }
 

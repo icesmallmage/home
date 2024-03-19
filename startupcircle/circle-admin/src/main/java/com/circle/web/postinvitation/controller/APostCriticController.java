@@ -33,8 +33,8 @@ public class APostCriticController extends BaseController
     @ApiOperation("通过帖子id查询回复分页列表")
     @GetMapping(value = "/getInfoById")
     public AjaxResult<PageInfo<APostCritic>> getInfoById(@RequestParam("id") Long id,
-                                                         @RequestParam("pageNum") int pageNum,
-                                                         @RequestParam("pageSize") int pageSize) {
+                                                         @RequestParam("pageNum") Integer pageNum,
+                                                         @RequestParam("pageSize") Integer pageSize) {
         return success(aPostCriticService.getInfoByid(id, pageNum, pageSize));
     }
 

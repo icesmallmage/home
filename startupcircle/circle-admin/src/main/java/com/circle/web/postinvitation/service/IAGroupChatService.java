@@ -1,6 +1,10 @@
 package com.circle.web.postinvitation.service;
 
 import com.circle.web.postinvitation.domain.po.AGroupChat;
+import com.circle.web.postinvitation.domain.to.AGroupChatDto;
+import com.circle.web.postinvitation.domain.to.AGroupUserRelateDto;
+import com.circle.web.postinvitation.domain.vo.AGroupChatVo;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -28,13 +32,17 @@ public interface IAGroupChatService
      */
     public List<AGroupChat> selectAGroupChatList(AGroupChat aGroupChat);
 
+
+    public PageInfo<AGroupChatVo> groupChatPageList(Integer pageNum, Integer pageSize);
+
+
     /**
      * 新增【群聊】
-     * 
-     * @param aGroupChat 【群聊】
+     *
+     * @param dto 【群聊】
      * @return 结果
      */
-    public int insertAGroupChat(AGroupChat aGroupChat);
+    public void insertAGroupChat(AGroupChatDto dto);
 
     /**
      * 修改【群聊】
@@ -59,4 +67,6 @@ public interface IAGroupChatService
      * @return 结果
      */
     public int deleteAGroupChatById(String id);
+
+    public void userJoinGroup(AGroupUserRelateDto dto);
 }

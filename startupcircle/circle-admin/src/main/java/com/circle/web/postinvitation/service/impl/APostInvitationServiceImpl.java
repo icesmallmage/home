@@ -41,7 +41,7 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
     private AOperateCountMapper aOperateCountMapper;
 
     @Override
-    public PageInfo<APostInvitationVo> pageList(APostInvitationDto dto, int pageNum, int pageSize) {
+    public PageInfo<APostInvitationVo> pageList(APostInvitationDto dto, Integer pageNum, Integer pageSize) {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         APostInvitation po = new APostInvitation();
         BeanUtil.copyProperties(dto, po);
@@ -154,7 +154,7 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
     }
 
     @Override
-    public PageInfo<APostInvitationVo> operateList(String operateType, int pageNum, int pageSize) {
+    public PageInfo<APostInvitationVo> operateList(String operateType, Integer pageNum, Integer pageSize) {
         // 获取当前的用户
         LoginUser loginUser = SecurityUtils.getLoginUser();
         String userId = String.valueOf(loginUser.getUserId());
@@ -162,6 +162,14 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
         List<APostInvitation> list = aPostInvitationMapper.selectOperateList(userId, operateType);
         PageInfo pageInfo = new PageInfo(list);
         List<APostInvitationVo> voList = BeanUtil.copyToList(list, APostInvitationVo.class);
+        voList.stream().forEach(t -> {
+            if("0".equals(operateType)){
+                t.setBooView(true);
+            }
+            if("1".equals(operateType)){
+                t.setBooUpvote(true);
+            }
+        });
         pageInfo.setList(voList);
         return pageInfo;
     }

@@ -13,6 +13,7 @@ public class SysUserUpdateDto {
     private String userId;
 
     @ApiModelProperty(value = "用户昵称: 没传的话存账号")
+    @NotEmpty(message = "昵称不能为空")
     private String nickName;
 
     @ApiModelProperty(value = "行业名称")

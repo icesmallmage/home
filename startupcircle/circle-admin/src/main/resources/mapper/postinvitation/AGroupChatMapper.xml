@@ -36,10 +36,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="peoNum != null "> and peo_num = #{peoNum}</if>
         </where>
     </select>
-    
+
+    <select id="selectIds" resultType="String">
+        select id from a_group_chat where del_flag = '0'
+    </select>
+
     <select id="selectAGroupChatById" parameterType="String" resultMap="AGroupChatResult">
         <include refid="selectAGroupChatVo"/>
         where id = #{id}
+    </select>
+
+    <select id="selectAGroupChatByIds" parameterType="String" resultMap="AGroupChatResult">
+        <include refid="selectAGroupChatVo"/>
+        where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
         
     <insert id="insertAGroupChat" parameterType="AGroupChat">

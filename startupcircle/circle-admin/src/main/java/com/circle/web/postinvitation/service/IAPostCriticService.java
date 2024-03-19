@@ -24,7 +24,7 @@ public interface IAPostCriticService
     /**
      * 获取【帖子回复信息】详细信息
      */
-    public PageInfo<APostCritic> getInfoByid(Long id, int pageNum, int pageSize);
+    public PageInfo<APostCritic> getInfoByid(Long id, Integer pageNum, Integer pageSize);
 
     /**
      * 查询【回复信息】列表

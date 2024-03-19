@@ -44,7 +44,7 @@ public class AGroupChat extends BaseEntity
 
     /** 群人数 */
     @Excel(name = "群人数")
-    private Long peoNum;
+    private Integer peoNum;
 
     /** 删除标志 */
     private String delFlag;
@@ -112,16 +112,16 @@ public class AGroupChat extends BaseEntity
     {
         return groNotice;
     }
-    public void setPeoNum(Long peoNum) 
-    {
+
+    public Integer getPeoNum() {
+        return peoNum;
+    }
+
+    public void setPeoNum(Integer peoNum) {
         this.peoNum = peoNum;
     }
 
-    public Long getPeoNum() 
-    {
-        return peoNum;
-    }
-    public void setDelFlag(String delFlag) 
+    public void setDelFlag(String delFlag)
     {
         this.delFlag = delFlag;
     }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
+import com.circle.common.annotation.Anonymous;
 import com.circle.common.core.domain.dto.SysUserUpdateDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -256,6 +257,7 @@ public class SysUserController extends BaseController
     }
 
 
+    @Anonymous
     @ApiOperation("app用户修改")
     @PostMapping("/appUserUpdate")
     public AjaxResult appUserUpdate(@RequestBody SysUserUpdateDto dto){
