@@ -87,7 +87,7 @@ public class AGroupChatServiceImpl implements IAGroupChatService
         List<String> gIds = relateList.stream().map(AGroupUserRelate::getGId).collect(Collectors.toList());
         // 通过群聊id集合，返回所有的群聊信息
         if(StringUtils.isListNull(gIds)){
-            return null;
+            return new PageInfo<AGroupChatVo>();
         }
         PageHelper.startPage(pageNum, pageSize);
         List<AGroupChat> poList = aGroupChatMapper.selectAGroupChatByIds(gIds);
