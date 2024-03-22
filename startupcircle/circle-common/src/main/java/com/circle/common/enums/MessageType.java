@@ -5,7 +5,7 @@ package com.circle.common.enums;
  */
 public enum MessageType {
 
-    CHAT,           // 闲聊
+    CHAT,           // 聊天中
     JOIN,           // 加入
     LEAVE;          // 离开
 

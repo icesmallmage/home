@@ -70,7 +70,6 @@ public class AGroupChatController extends BaseController {
         return success();
     }
 
-    @ApiOperation("上线/下线群聊")
     @MessageMapping("addUser")
     public void addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
 
@@ -84,7 +83,6 @@ public class AGroupChatController extends BaseController {
         }
     }
 
-    @ApiOperation("发生消息")
     @MessageMapping("sendMessage")
     public void sendMessage(@Payload ChatMessage chatMessage, String gId) {
         try {
