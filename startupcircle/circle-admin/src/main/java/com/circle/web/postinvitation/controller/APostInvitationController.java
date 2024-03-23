@@ -53,8 +53,7 @@ public class APostInvitationController extends BaseController
     @ApiOperation("新增【帖子信息表】")
     @Log(title = "新增【帖子信息表】", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody APostInvitationAddDto dto)
-    {
+    public AjaxResult add(@RequestBody APostInvitationAddDto dto) {
         aPostInvitationService.insertAPostInvitation(dto);
         return success();
     }
@@ -65,8 +64,7 @@ public class APostInvitationController extends BaseController
     @ApiOperation("删除【帖子信息表】")
     @Log(title = "删除【帖子信息表】", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable String[] ids)
-    {
+    public AjaxResult remove(@PathVariable String[] ids) {
         aPostInvitationService.deleteAPostInvitationByIds(ids);
         return success();
     }

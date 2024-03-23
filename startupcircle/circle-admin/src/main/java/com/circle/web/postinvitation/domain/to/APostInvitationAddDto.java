@@ -35,4 +35,7 @@ public class APostInvitationAddDto {
 
     @ApiModelProperty(value = "发评论人城市")
     private String city;
+
+    @ApiModelProperty(value = "群聊名")
+    private String groupName;
 }

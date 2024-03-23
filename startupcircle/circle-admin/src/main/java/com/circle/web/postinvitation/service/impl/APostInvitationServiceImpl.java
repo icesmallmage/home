@@ -1,5 +1,6 @@
 package com.circle.web.postinvitation.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,18 +11,24 @@ import com.circle.common.core.domain.model.LoginUser;
 import com.circle.common.utils.DateUtils;
 import com.circle.common.utils.SecurityUtils;
 import com.circle.common.utils.StringUtils;
+import com.circle.web.postinvitation.domain.po.AGroupChat;
 import com.circle.web.postinvitation.domain.po.AOperateCount;
 import com.circle.web.postinvitation.domain.po.APostInvitation;
+import com.circle.web.postinvitation.domain.to.AGroupChatDto;
 import com.circle.web.postinvitation.domain.to.APostInvitationAddDto;
 import com.circle.web.postinvitation.domain.to.APostInvitationDto;
 import com.circle.web.postinvitation.domain.to.APostInvitationUpdateDto;
 import com.circle.web.postinvitation.domain.vo.APostInvitationVo;
+import com.circle.web.postinvitation.mapper.AGroupChatMapper;
 import com.circle.web.postinvitation.mapper.AOperateCountMapper;
 import com.circle.web.postinvitation.mapper.APostInvitationMapper;
+import com.circle.web.postinvitation.service.IAGroupChatService;
 import com.circle.web.postinvitation.service.IAPostInvitationService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -40,9 +47,14 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
     @Resource
     private AOperateCountMapper aOperateCountMapper;
 
+    @Resource
+    private AGroupChatMapper aGroupChatMapper;
+
+    @Autowired
+    private IAGroupChatService iaGroupChatService;
+
     @Override
     public PageInfo<APostInvitationVo> pageList(APostInvitationDto dto, Integer pageNum, Integer pageSize) {
-        LoginUser loginUser = SecurityUtils.getLoginUser();
         APostInvitation po = new APostInvitation();
         BeanUtil.copyProperties(dto, po);
         if(StringUtils.isNotEmpty(dto.getUserId())){
@@ -51,21 +63,7 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
         PageHelper.startPage(pageNum, pageSize);
         List<APostInvitation> list = aPostInvitationMapper.selectAPostInvitationList(po);
         PageInfo pageInfo = new PageInfo(list);
-        List<APostInvitationVo>  voList = BeanUtil.copyToList(list, APostInvitationVo.class);
-        voList.forEach(t -> {
-            AOperateCount aOperateCount = new AOperateCount();
-            aOperateCount.settId(t.getId());
-            aOperateCount.setUserId(String.valueOf(loginUser.getUserId()));
-            aOperateCount.setIsOperate("1");
-            List<AOperateCount> operateList = aOperateCountMapper.selectAOperateCountList(aOperateCount);
-            List<String> operates = operateList.stream().map(AOperateCount::getOperateType).collect(Collectors.toList());
-            if(operates.contains("0")){
-                t.setBooView(true);
-            }
-            if(operates.contains("1")){
-                t.setBooUpvote(true);
-            }
-        });
+        List<APostInvitationVo> voList = this.copyList(list);
         pageInfo.setList(voList);
         return pageInfo;
     }
@@ -79,12 +77,24 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
     @Override
     public List<APostInvitationVo> selectAPostInvitationList(APostInvitationDto dto)
     {
-        LoginUser loginUser = SecurityUtils.getLoginUser();
         APostInvitation po = new APostInvitation();
         BeanUtil.copyProperties(dto, po);
         List<APostInvitation> list = aPostInvitationMapper.selectAPostInvitationList(po);
-        List<APostInvitationVo>  voList = BeanUtil.copyToList(list, APostInvitationVo.class);
+        List<APostInvitationVo>  voList = this.copyList(list);
+        return voList;
+    }
+
+    /**
+     * 复制列表值
+     */
+    public List<APostInvitationVo> copyList(List<APostInvitation> list){
+        if(StringUtils.isListNull(list)){
+            return new ArrayList<>();
+        }
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        List<APostInvitationVo> voList = BeanUtil.copyToList(list, APostInvitationVo.class);
         voList.forEach(t -> {
+            // 存放操作信息
             AOperateCount aOperateCount = new AOperateCount();
             aOperateCount.settId(t.getId());
             aOperateCount.setUserId(String.valueOf(loginUser.getUserId()));
@@ -97,6 +107,15 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
             if(operates.contains("1")){
                 t.setBooUpvote(true);
             }
+            // 存放群聊信息
+            AGroupChat aGroupChat = new AGroupChat();
+            aGroupChat.settId(t.getId());
+            List<AGroupChat> aGroupChatList = aGroupChatMapper.selectAGroupChatList(aGroupChat);
+            if(StringUtils.isListNotNull(aGroupChatList) && StringUtils.isNotNull(aGroupChatList.get(0))){
+                aGroupChat = aGroupChatList.get(0);
+                t.setGroupId(aGroupChat.getId());
+                t.setGroupName(aGroupChat.getName());
+            }
         });
         return voList;
     }
@@ -108,20 +127,31 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
      * @return 结果
      */
     @Override
-    public int insertAPostInvitation(APostInvitationAddDto dto)
-    {
+    @Transactional(rollbackFor = Exception.class)
+    public int insertAPostInvitation(APostInvitationAddDto dto) {
         // 获取当前的用户
         LoginUser loginUser = SecurityUtils.getLoginUser();
+        String id = String.valueOf(IdUtil.getSnowflake().nextId());
         APostInvitation po = new APostInvitation();
         BeanUtil.copyProperties(dto, po);
-        po.setId(String.valueOf(IdUtil.getSnowflake().nextId()));
+        po.setId(id);
         po.setUpvoteCount("0");
         po.setViewCount("0");
         po.setCriticCount("0");
         po.setDelFlag(Constants.DEL_FLAG_FALSE);
         po.setCreateTime(DateUtils.getNowDate());
         po.setCreateBy(loginUser.getUsername());
-        return aPostInvitationMapper.insertAPostInvitation(po);
+        aPostInvitationMapper.insertAPostInvitation(po);
+        if(StringUtils.isNotEmpty(dto.getGroupName())){
+            // 如果传了群里名， 则一起创建群里
+            AGroupChatDto chatDto = new AGroupChatDto();
+            chatDto.setName(dto.getGroupName());
+            chatDto.setTId(id);
+            chatDto.setGroOwnId(dto.getPostUserId());
+            chatDto.setGroOwnName(dto.getPostNickName());
+            iaGroupChatService.insertAGroupChat(chatDto);
+        }
+        return 0;
     }
 
     @Override
