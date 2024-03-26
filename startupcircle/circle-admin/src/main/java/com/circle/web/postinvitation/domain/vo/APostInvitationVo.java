@@ -17,6 +17,9 @@ public class APostInvitationVo extends APostInvitation {
     @ApiModelProperty(value = "群聊名")
     private String groupName;
 
+    @ApiModelProperty(value = "当前登录人是否加入群聊")
+    private Boolean booJoinGroup;
+
     public Boolean getBooView() {
         return booView;
     }
@@ -47,5 +50,13 @@ public class APostInvitationVo extends APostInvitation {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public Boolean getBooJoinGroup() {
+        return booJoinGroup;
+    }
+
+    public void setBooJoinGroup(Boolean booJoinGroup) {
+        this.booJoinGroup = booJoinGroup;
     }
 }

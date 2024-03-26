@@ -10,13 +10,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * 
  * @author ruoyi
  */
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
+@SpringBootApplication
 @EnableScheduling
 public class CircleApplication
 {
     public static void main(String[] args)
     {
-        // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(CircleApplication.class, args);
         System.out.println("(♥◠‿◠)ﾉﾞ  创业圈启动成功 ");
     }

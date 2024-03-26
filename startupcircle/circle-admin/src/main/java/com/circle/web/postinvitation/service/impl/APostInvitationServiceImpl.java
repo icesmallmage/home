@@ -12,6 +12,7 @@ import com.circle.common.utils.DateUtils;
 import com.circle.common.utils.SecurityUtils;
 import com.circle.common.utils.StringUtils;
 import com.circle.web.postinvitation.domain.po.AGroupChat;
+import com.circle.web.postinvitation.domain.po.AGroupUserRelate;
 import com.circle.web.postinvitation.domain.po.AOperateCount;
 import com.circle.web.postinvitation.domain.po.APostInvitation;
 import com.circle.web.postinvitation.domain.to.AGroupChatDto;
@@ -23,6 +24,7 @@ import com.circle.web.postinvitation.mapper.AGroupChatMapper;
 import com.circle.web.postinvitation.mapper.AOperateCountMapper;
 import com.circle.web.postinvitation.mapper.APostInvitationMapper;
 import com.circle.web.postinvitation.service.IAGroupChatService;
+import com.circle.web.postinvitation.service.IAGroupUserRelateService;
 import com.circle.web.postinvitation.service.IAPostInvitationService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -52,6 +54,9 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
 
     @Autowired
     private IAGroupChatService iaGroupChatService;
+
+    @Autowired
+    private IAGroupUserRelateService iaGroupUserRelateService;
 
     @Override
     public PageInfo<APostInvitationVo> pageList(APostInvitationDto dto, Integer pageNum, Integer pageSize) {
@@ -116,6 +121,13 @@ public class APostInvitationServiceImpl implements IAPostInvitationService
                 t.setGroupId(aGroupChat.getId());
                 t.setGroupName(aGroupChat.getName());
             }
+            // 判断当前登录人是否已经加入群聊
+            AGroupUserRelate aGroupUserRelate = new AGroupUserRelate();
+            aGroupUserRelate.setGId(t.getId());
+            aGroupUserRelate.setUserId(String.valueOf(loginUser.getUserId()));
+            aGroupUserRelate.setDelFlag(Constants.DEL_FLAG_FALSE);
+            List<AGroupUserRelate> aGroupUserRelateList = iaGroupUserRelateService.selectAGroupUserRelateList(aGroupUserRelate);
+            t.setBooJoinGroup(StringUtils.isListNotNull(aGroupUserRelateList));
         });
         return voList;
     }

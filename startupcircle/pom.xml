@@ -180,6 +180,7 @@
         <module>circle-quartz</module>
         <module>circle-generator</module>
         <module>circle-common</module>
+        <module>websocket</module>
     </modules>
     <packaging>pom</packaging>
 

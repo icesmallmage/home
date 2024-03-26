@@ -21,13 +21,10 @@ import com.circle.web.postinvitation.mapper.AGroupChatMapper;
 import com.circle.web.postinvitation.mapper.AGroupUserRelateMapper;
 import com.circle.web.postinvitation.mapper.APostInvitationMapper;
 import com.circle.web.postinvitation.service.IAGroupChatService;
-import com.circle.web.system.service.SysCommonService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.Resource;
 
 /**
@@ -47,9 +44,6 @@ public class AGroupChatServiceImpl implements IAGroupChatService
 
     @Resource
     private AGroupUserRelateMapper aGroupUserRelateMapper;
-
-    @Autowired
-    private SysCommonService sysCommonService;
 
     /**
      * 查询【群聊】
@@ -134,9 +128,6 @@ public class AGroupChatServiceImpl implements IAGroupChatService
         relateDto.setGId(dto.getTId());
         relateDto.setUserId(dto.getGroOwnId());
         this.userJoinGroup(relateDto);
-        // 刷新群聊个数
-        sysCommonService.realRefreshGroupId();
-
     }
 
     /**
