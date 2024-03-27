@@ -10,8 +10,6 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @Api("核心业务 - 发帖模块 - 群聊")
@@ -21,18 +19,6 @@ public class AGroupChatController extends BaseController {
 
     @Autowired
     private IAGroupChatService iaGroupChatService;
-
-    @Value("${redis.channel.msgUser}")
-    private String msgUser;
-
-    @Value("${redis.set.onlineUsers}")
-    private String onlineUsers;
-
-    @Value("${redis.channel.infoUser}")
-    private String infoUser;
-
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 查询该用户所有的群聊分页列表
