@@ -1,6 +1,7 @@
 package com.circle.web.postinvitation.mapper;
 
 import com.circle.web.postinvitation.domain.po.APostCritic;
+import com.circle.web.postinvitation.domain.vo.APostCriticVo;
 
 import java.util.List;
 
@@ -67,4 +68,8 @@ public interface APostCriticMapper
      * @return 结果
      */
     public int deleteAPostCriticByIds(Long[] ids);
+
+    public List<APostCriticVo> getCriticInfoByUserId(APostCritic aPostCritic);
+
+    public List<APostCriticVo> getReplyInfoByUserId(APostCritic aPostCritic);
 }

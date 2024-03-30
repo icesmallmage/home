@@ -1,6 +1,7 @@
 package com.circle.web.postinvitation.service;
 
 import com.circle.web.postinvitation.domain.po.APostCritic;
+import com.circle.web.postinvitation.domain.vo.APostCriticVo;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -65,4 +66,14 @@ public interface IAPostCriticService
      * @return 结果
      */
     public int deleteAPostCriticById(Long id);
+
+    /**
+     * 查询我评论了哪些帖子信息分页列表
+     */
+    public PageInfo<APostCriticVo> getCriticInfoByUserId(Integer pageNum, Integer pageSize);
+
+    /**
+     * 查询谁评论了我信息分页列表
+     */
+    public PageInfo<APostCriticVo> getReplyInfoByUserId(Integer pageNum, Integer pageSize);
 }
