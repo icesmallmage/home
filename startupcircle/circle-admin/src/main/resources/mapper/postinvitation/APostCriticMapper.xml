@@ -139,23 +139,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="getReplyInfoByUserId" parameterType="APostCritic" resultType="com.circle.web.postinvitation.domain.vo.APostCriticVo">
-        select c.id id,
-        c.post_user_id postUserId,
-        c.post_nick_name postNickName,
-        c.content content,
-        c.post_invitation_id postInvitationId,
-        i.title postInvitationTitle,
-        c.parent_id parentId,
-        c.parent_nick_name parentNickName,
-        nvl(cr.content, '') parentContent,
-        c.create_time
-        from a_post_critic c
-        inner join a_post_invitation i on c.post_invitation_id = i.id
-        inner join a_post_critic cr on c.parent_id = cr.id
-        <where>
-            <if test="postUserId != null  and postUserId != ''"> and cr.post_user_id = #{postUserId}</if>
-            <if test="delFlag != null and delFlag != ''"> and c.del_flag = #{delFlag}</if>
-        </where>
-        order by c.create_time desc
+        select * from (
+            select c.id id,
+            c.post_user_id postUserId,
+            c.post_nick_name postNickName,
+            c.content content,
+            c.post_invitation_id postInvitationId,
+            i.title postInvitationTitle,
+            c.parent_id parentId,
+            c.parent_nick_name parentNickName,
+            nvl(cr.content, '') parentContent,
+            c.create_time
+            from a_post_critic c
+            inner join a_post_invitation i on c.post_invitation_id = i.id
+            inner join a_post_critic cr on c.parent_id = cr.id
+            where cr.post_user_id = #{postUserId} and c.del_flag = #{delFlag}
+            union
+            select c.id id,
+            c.post_user_id postUserId,
+            c.post_nick_name postNickName,
+            c.content content,
+            c.post_invitation_id postInvitationId,
+            i.title postInvitationTitle,
+            c.parent_id parentId,
+            c.parent_nick_name parentNickName,
+            nvl(cr.content, '') parentContent,
+            c.create_time
+            from a_post_invitation i
+            inner join a_post_critic c on c.post_invitation_id = i.id
+            left join a_post_critic cr on c.parent_id = cr.id
+            where i.post_user_id = #{postUserId} and i.del_flag = #{delFlag} and c.post_user_id <![CDATA[ <> ]]> #{postUserId}
+        ) a
+        order by a.create_time desc
     </select>
 </mapper>
