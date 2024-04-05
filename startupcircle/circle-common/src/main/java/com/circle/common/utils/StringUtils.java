@@ -644,4 +644,14 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
     public static Boolean isListNotNull(List list){
         return !isListNull(list);
     }
+
+    /**
+     *
+     * @param topicType topic类型
+     * @param sign 标识
+     * @return topic名称
+     */
+    public static String getTopicName(String topicType, String sign){
+        return String.valueOf(topicType + sign);
+    }
 }

@@ -138,4 +138,4 @@ xss:
 
 kafka:
   topic:
-    commentMessage: commentMessageTopic
+    commentMessageTopic: commentMessageTopic
