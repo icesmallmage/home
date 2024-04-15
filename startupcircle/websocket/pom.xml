@@ -24,6 +24,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
+
+        <!-- 通用工具-->
+        <dependency>
+            <groupId>com.circle</groupId>
+            <artifactId>circle-common</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
