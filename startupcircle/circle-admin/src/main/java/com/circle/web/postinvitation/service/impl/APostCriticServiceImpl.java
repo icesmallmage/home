@@ -1,8 +1,6 @@
 package com.circle.web.postinvitation.service.impl;
 
 import java.util.List;
-
-import cn.hutool.core.util.IdUtil;
 import com.circle.common.constant.Constants;
 import com.circle.common.core.domain.model.LoginUser;
 import com.circle.common.utils.DateUtils;
@@ -10,6 +8,7 @@ import com.circle.common.utils.SecurityUtils;
 import com.circle.common.utils.StringUtils;
 import com.circle.web.postinvitation.domain.po.APostCritic;
 import com.circle.web.postinvitation.domain.to.APostInvitationUpdateDto;
+import com.circle.web.postinvitation.domain.vo.APostCriticVo;
 import com.circle.web.postinvitation.mapper.APostCriticMapper;
 import com.circle.web.postinvitation.service.IAPostCriticService;
 import com.circle.web.postinvitation.service.IAPostInvitationService;
@@ -136,5 +135,31 @@ public class APostCriticServiceImpl implements IAPostCriticService
     public int deleteAPostCriticById(Long id)
     {
         return aPostCriticMapper.deleteAPostCriticById(id);
+    }
+
+    @Override
+    public PageInfo<APostCriticVo> getCriticInfoByUserId(Integer pageNum, Integer pageSize) {
+        // 获取当前登录人id
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        String userId = String.valueOf(loginUser.getUserId());
+        APostCritic critic = new APostCritic();
+        critic.setPostUserId(userId);
+        critic.setDelFlag(Constants.DEL_FLAG_FALSE);
+        PageHelper.startPage(pageNum, pageSize);
+        List<APostCriticVo> voList = aPostCriticMapper.getCriticInfoByUserId(critic);
+        return new PageInfo<>(voList);
+    }
+
+    @Override
+    public PageInfo<APostCriticVo> getReplyInfoByUserId(Integer pageNum, Integer pageSize) {
+        // 获取当前登录人id
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        String userId = String.valueOf(loginUser.getUserId());
+        APostCritic critic = new APostCritic();
+        critic.setPostUserId(userId);
+        critic.setDelFlag(Constants.DEL_FLAG_FALSE);
+        PageHelper.startPage(pageNum, pageSize);
+        List<APostCriticVo> voList = aPostCriticMapper.getReplyInfoByUserId(critic);
+        return new PageInfo<>(voList);
     }
 }

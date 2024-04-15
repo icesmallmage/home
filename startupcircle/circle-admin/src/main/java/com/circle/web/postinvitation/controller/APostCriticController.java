@@ -5,6 +5,7 @@ import com.circle.common.core.controller.BaseController;
 import com.circle.common.core.domain.AjaxResult;
 import com.circle.common.enums.BusinessType;
 import com.circle.web.postinvitation.domain.po.APostCritic;
+import com.circle.web.postinvitation.domain.vo.APostCriticVo;
 import com.circle.web.postinvitation.service.IAPostCriticService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -72,6 +73,26 @@ public class APostCriticController extends BaseController
     {
         aPostCriticService.deleteAPostCriticByIds(ids);
         return success();
+    }
+
+    /**
+     * 查询我评论了哪些信息分页列表
+     */
+    @ApiOperation("查询我评论了哪些帖子信息分页列表")
+    @GetMapping(value = "/getCriticInfoByUserId")
+    public AjaxResult<PageInfo<APostCriticVo>> getCriticInfoByUserId(@RequestParam("pageNum") Integer pageNum,
+                                                               @RequestParam("pageSize") Integer pageSize) {
+        return success(aPostCriticService.getCriticInfoByUserId(pageNum, pageSize));
+    }
+
+    /**
+     * 查询谁评论了我信息分页列表
+     */
+    @ApiOperation("查询谁回复了我信息分页列表")
+    @GetMapping(value = "/getReplyInfoByUserId")
+    public AjaxResult<PageInfo<APostCriticVo>> getReplyInfoByUserId(@RequestParam("pageNum") Integer pageNum,
+                                                             @RequestParam("pageSize") Integer pageSize) {
+        return success(aPostCriticService.getReplyInfoByUserId(pageNum, pageSize));
     }
 
 }
